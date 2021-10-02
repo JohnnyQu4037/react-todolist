@@ -1,0 +1,25 @@
+.display{
+    padding:20px;
+}
+
+.topNav{
+    height:50px ;
+    background-color: #cfdefd;
+}
+
+.topNav ul{
+   display: flex; 
+   margin: 0px;
+   padding: 0px;
+}
+
+.topNav li{
+   padding: 10px;
+   margin-left: 100px;
+   text-align: center;
+   list-style: none;
+ }
+
+.todolist-display{
+    display:flex;
+}

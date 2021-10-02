@@ -1,0 +1,23 @@
+.tableView {
+    border: solid black;
+}
+
+.tableView th{
+    background-color: #b3b3a2;
+    padding:10px;
+}
+
+.tableView td{
+    text-align: center;
+    padding:10px;
+}
+
+.delete-button{
+    background-color: #61bef9;
+    color: white;
+    border: solid black;
+    padding: 5px;
+}
+.even-row{
+    background-color: #f5f4df;
+}
