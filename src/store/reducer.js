@@ -1,5 +1,8 @@
 import {CHANGE_DESCRIPTION,CHANGE_CONTENT,CHANGE_CATEGORY, SUBMIT,REMOVETASK,SELECTTASK} from "./actionTypes"
 
+//Reducer records the id and other information of current Form field
+//It tracks the index of the selected task and also whether or not all tasks has been selected.
+//The list of all tasks has been saved here.
 const defaultState = {
     id: 0,
     description:"",
@@ -42,6 +45,11 @@ export default (state = defaultState,action)=>{
         newState.category = action.value  
         return newState
     }
+    //make a new submit newSub to have the id, description,content and category value of the current state.
+    //If the list is not empty, change the id of the newSub to the id of last task of the list +1
+    //add the newSub to the list
+    //Increment the id for the next submition.
+    //Empty the description,content and category value.
     if(action.type === SUBMIT){
         let newState = JSON.parse(JSON.stringify(state))
         let newSub  = (({ id, description,content,category }) => ({  id, description,content,category }))(newState);
@@ -58,6 +66,8 @@ export default (state = defaultState,action)=>{
         newState.list.splice(action.index,1)
         return newState
     }
+    //Add or remove the index of the task from the selected list depending on the existence of the index in the list
+    //If the index of the task is the last one that can be add in the list, make allSelected true, otherwise false.
     if(action.type === SELECTTASK){
         const newState = JSON.parse(JSON.stringify(state))
         if(newState.selected.includes(action.index)){
@@ -65,8 +75,16 @@ export default (state = defaultState,action)=>{
         }else{
             newState.selected.push(action.index)
         }
+        if (newState.selected.length === newState.list.length) {
+            newState.allSelected = true
+        }else{
+            newState.allSelected = false
+        }
         return newState
-    }if(action.type === "allSelect"){
+    }
+    //when called, if the allSelect is toggled to be true, generate a list that includes the index of all tasks
+    //otherwise, assign an empty list.
+    if(action.type === "allSelect"){
         const newState = JSON.parse(JSON.stringify(state))
         newState.allSelected = !newState.allSelected
         if (newState.allSelected){
@@ -76,6 +94,7 @@ export default (state = defaultState,action)=>{
         }
         return newState
     }
+    //sort the list into a descending order and traverse the list to remove the task with same index.
     if(action.type === "deleteSelection"){
         const newState = JSON.parse(JSON.stringify(state))
         let selection = newState.selected

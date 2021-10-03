@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import store from '../store/index.js'
 import {changeDescriptionAction,changeContentAction, changeCategoryAction,submitAction} from "../store/actionCreators"
 
+//This module set the data from reducer through store and subcribe to the store for updates.
+//when the module is about to unmount, the module will unsubcribe in componentWillUnmount()
 class Form extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +19,9 @@ class Form extends Component {
             return;
         };
     }
+
+    //A table element will wrap the text and input fields for better formatting.
+    //When the input fields has changed, functions of onChange will be triggered and value will be send to reducer.
     render() { 
         return ( 
             <div>
@@ -48,6 +53,7 @@ class Form extends Component {
          );
     }
 
+    //below are the function that create action from actionCreators and dispatch to the store.
     changeDescription(e){
         const action = changeDescriptionAction(e.target.value)
         store.dispatch(action)

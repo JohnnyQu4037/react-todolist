@@ -3,11 +3,15 @@ import "./table-style.css"
 import {connect} from 'react-redux'
 import {removeTaskAction,selectAction} from "../store/actionCreators"
 import {Link} from 'react-router-dom'
-import Detail from '../pages/Detail';
 
+//Table module is stateless and connect through react-redux.
+//The button deletes all of the selected tasks.
+//The table generates rows of tasks from the list of task that has been recorded in the reducer.
+//When the table row is generating, it retrieve the data from props and gives the values to corresponding tabs.
+//The odd and even row of data will have different colo scheme.
+//The clickable description put the id of the task to Link
 const Table  = (props)=>{
     let {list,removeTask,toggleSelect,selected,allSelected,toggleAllSelect,deleteSelection} = props
-    let routeConfig = {path: "/todo/", exact:true, component:Detail}
     return ( 
             <div>
                 <button className = "delete-button" onClick = {()=>{deleteSelection()}}>Delete selected</button>
@@ -32,7 +36,6 @@ const Table  = (props)=>{
                         {   
                             list.map((item,index)=>
                                 <tr key = {index} className = {(index+1)%2 ===0?"even-row":""}>
-                                    {/* to do */}
                                     <td>
                                         <input 
                                             type="checkbox" 
@@ -42,7 +45,7 @@ const Table  = (props)=>{
                                     </td>
                                     <td>
                                         <Link 
-                                            to = {{pathname: routeConfig.path+item.id, state: {task:list}}} 
+                                            to = {"/todo/"+item.id}
                                             style = {{textDecoration:"none"}}
                                         >
                                             {item.description}
